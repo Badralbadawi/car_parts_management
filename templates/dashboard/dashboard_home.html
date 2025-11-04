@@ -1,0 +1,42 @@
+<!-- قالب الصفحة الرئيسية للوحة التحكم -->
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}الرئيسية - لوحة التحكم{% endblock %}
+
+{% block dashboard_content %}
+<h1 class="mb-4">أهلاً بك في لوحة التحكم</h1>
+
+<div class="row">
+    <!-- بطاقة إحصائيات عدد المستخدمين -->
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">المستخدمون</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ user_count }}</h5>
+                <p class="card-text">إجمالي عدد المستخدمين المسجلين.</p>
+            </div>
+        </div>
+    </div>
+    <!-- بطاقة إحصائيات عدد السيارات/القطع -->
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">قطع الغيار</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ car_count }}</h5>
+                <p class="card-text">إجمالي عدد قطع الغيار المسجلة.</p>
+            </div>
+        </div>
+    </div>
+    <!-- بطاقة إحصائيات عدد الشركات -->
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">الشركات</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ company_count }}</h5>
+                <p class="card-text">إجمالي عدد الشركات المصنعة.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

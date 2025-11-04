@@ -1,0 +1,48 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}إضافة / تعديل سيارة{% endblock %}
+
+{% block dashboard_content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            {% if form.instance.pk %}تعديل السيارة{% else %}إضافة سيارة جديدة{% endif %}
+        </h4>
+    </div>
+    <div class="card-body">
+        <!-- <form method="post" class="needs-validation">
+            {% csrf_token %}
+            <div class="row g-3">
+                {{ form.as_p }}
+            </div>
+            <div class="mt-4 text-end">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> حفظ
+                </button>
+                <a href="{% url 'dashboard:car_list' %}" class="btn btn-secondary">رجوع</a>
+            </div>
+        </form> -->
+   <form method="post" class="needs-validation">
+    {% csrf_token %}
+    <div class="row g-3">
+        <div class="col-md-6">{{ form.company.label_tag }} {{ form.company }}</div>
+        <div class="col-md-6">{{ form.model.label_tag }} {{ form.model }}</div>
+        <div class="col-md-6">{{ form.manufacturer.label_tag }} {{ form.manufacturer }}</div>
+        <div class="col-md-6">{{ form.year.label_tag }} {{ form.year }}</div>
+        <div class="col-md-6">{{ form.part_number.label_tag }} {{ form.part_number }}</div>
+        <div class="col-md-6">{{ form.crash_in.label_tag }} {{ form.crash_in }}</div>
+        <div class="col-md-6">{{ form.id_chep.label_tag }} {{ form.id_chep }}</div>
+        <div class="col-md-6">{{ form.read.label_tag }} {{ form.read }}</div>
+        <div class="col-md-6">{{ form.write.label_tag }} {{ form.write }}</div>
+    </div>
+
+    <div class="mt-4 text-end">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-save"></i> حفظ
+        </button>
+        <a href="{% url 'dashboard:car_list' %}" class="btn btn-secondary">رجوع</a>
+    </div>
+</form>
+
+    </div>
+</div>
+{% endblock %}

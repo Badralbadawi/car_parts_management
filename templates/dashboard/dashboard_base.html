@@ -1,0 +1,179 @@
+<!-- هذا هو القالب الأساسي للوحة التحكم -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}لوحة التحكم{% endblock %}</title>
+    <!-- تضمين Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- تضمين Font Awesome للأيقونات -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <style>
+      /* تنسيقات خاصة بلوحة التحكم */
+      body {
+        display: flex;
+      }
+      .sidebar {
+        width: 280px;
+        min-height: 100vh;
+        background-color: #343a40;
+        padding-top: 1rem;
+      }
+      .sidebar .nav-link {
+        color: #adb5bd;
+      }
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        color: #fff;
+      }
+      .content {
+        flex-grow: 1;
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- الشريط الجانبي (Sidebar) -->
+    <div
+      class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+    >
+      <a
+        href="{% url 'dashboard:home' %}"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+      >
+        <i class="fa fa-tachometer-alt me-2"></i>
+        <span class="fs-4">لوحة التحكم</span>
+      </a>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a
+            href="{% url 'dashboard:home' %}"
+            class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            aria-current="page"
+            ><i class="fa fa-home me-2"></i> الرئيسية</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'dashboard:user_list' %}"
+            class="nav-link {% if 'user' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-users me-2"></i> إدارة المستخدمين</a
+          >
+        </li>
+        <hr />
+        <h6 class="text-secondary">إدارة المحتوى</h6>
+        <li>
+          <a
+            href="{% url 'dashboard:service_list' %}"
+            class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-concierge-bell me-2"></i> الخدمات</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'dashboard:slider_list' %}"
+            class="nav-link {% if 'slider' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-images me-2"></i> صور السلايدر</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'dashboard:social_link_list' %}"
+            class="nav-link {% if 'social' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-share-alt me-2"></i> روابط التواصل</a
+          >
+        </li>
+        <hr />
+        <h6 class="text-secondary">إدارة البيانات</h6>
+        <li>
+          <a
+            href="{% url 'dashboard:company_list' %}"
+            class="nav-link {% if 'company' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-building me-2"></i> الشركات</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'dashboard:carmodel_list' %}"
+            class="nav-link {% if 'carmodel' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-car-side me-2"></i> الموديلات</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'dashboard:car_list' %}"
+            class="nav-link {% if 'car' in request.resolver_match.url_name %}active{% endif %}"
+          >
+            <i class="fa fa-car me-2"></i> السيارات
+          </a>
+        </li>
+
+        <hr />
+        <li>
+          <a
+            href="{% url 'dashboard:appearance_update' %}"
+            class="nav-link {% if 'appearance' in request.resolver_match.url_name %}active{% endif %}"
+            ><i class="fa fa-paint-brush me-2"></i> المظهر</a
+          >
+        </li>
+      </ul>
+      <hr />
+      <div class="dropdown">
+        <a
+          href="#"
+          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa fa-user-circle me-2"></i>
+          <strong>{{ request.user.username }}</strong>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-dark text-small shadow"
+          aria-labelledby="dropdownUser1"
+        >
+         
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" href="{% url 'main:logout' %}"
+              >تسجيل الخروج</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+      <!-- عرض رسائل Django (messages framework) -->
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% block dashboard_content %}
+      <!-- محتوى صفحات لوحة التحكم سيتم إدراجه هنا -->
+      {% endblock %}
+    </div>
+
+    <!-- تضمين Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

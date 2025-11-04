@@ -1,0 +1,48 @@
+<!-- قالب صفحة تسجيل الدخول -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}تسجيل الدخول{% endblock %}
+
+{% block content %}
+<style>
+    /* تنسيقات خاصة بصفحة تسجيل الدخول */
+    body {
+        /* استخدام صورة الخلفية المحددة من لوحة التحكم */
+        background-image: url('{% if appearance.login_background_image %}{{ appearance.login_background_image.url }}{% endif %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+    .login-container {
+        max-width: 400px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+</style>
+
+<div class="login-container">
+    <h2 class="text-center mb-4">تسجيل الدخول</h2>
+    <!-- عرض رسائل الأخطاء العامة للنموذج -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- نموذج تسجيل الدخول -->
+    <form method="post">
+        {% csrf_token %} <!-- حماية من هجمات CSRF -->
+        {{ form|crispy }} <!-- عرض حقول النموذج باستخدام crispy_forms -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary mt-3">دخول</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

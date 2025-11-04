@@ -1,0 +1,99 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}قائمة السيارات{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>قائمة السيارات</h1>
+    <a href="{% url 'dashboard:car_create' %}" class="btn btn-primary">
+        <i class="fa fa-plus"></i> إضافة سيارة جديدة
+    </a>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                {{ search_form.query }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.company }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.model }}
+            </div>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary w-100">بحث</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>الرقم</th>
+            <th>الشركة</th>
+            <th>الموديل</th>
+            <th>اللون</th>
+            <th>السنة</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+        <tr>
+            <td>{{ car.id }}</td>
+            <td>{{ car.company.name }}</td>
+            <td>{{ car.model.name }}</td>
+            <td>{{ car.color }}</td>
+            <td>{{ car.year }}</td>
+            <td>
+                <a href="{% url 'dashboard:car_update' car.id %}" class="btn btn-sm btn-warning">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="{% url 'dashboard:car_delete' car.id %}" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+          
+                    زر لعرض التفاصيل
+                    <a href="{% url 'dashboard:car_detail' car.pk %}" class="btn btn-info btn-sm">عرض</a>
+               
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center">لا توجد سيارات حالياً.</td></tr>
+        {% endfor %}
+    </tbody>
+</table> -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>الشركة</th>
+            <th>الموديل</th>
+            <th>الصانع</th>
+            <th>السنة</th>
+            <th>رقم القطعة</th>
+            <th>ID Chep</th>
+            <th>Read</th>
+            <th>Write</th>
+            <th>إجراء</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+        <tr>
+            <td>{{ car.company.name }}</td>
+            <td>{{ car.model.name }}</td>
+            <td>{{ car.manufacturer }}</td>
+            <td>{{ car.year }}</td>
+            <td>{{ car.part_number }}</td>
+            <td>{{ car.id_chep }}</td>
+            <td>{{ car.read }}</td>
+            <td>{{ car.write }}</td>
+            <td>
+                <a href="{% url 'dashboard:car_do_it' car.id %}" class="btn btn-primary btn-sm">Do It</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

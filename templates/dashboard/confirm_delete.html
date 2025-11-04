@@ -1,0 +1,16 @@
+<!-- قالب عام لتأكيد الحذف -->
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}تأكيد الحذف{% endblock %}
+
+{% block dashboard_content %}
+<h1>تأكيد الحذف</h1>
+<p>هل أنت متأكد من أنك تريد حذف "{{ object }}"؟</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">نعم، احذف</button>
+    <!-- رابط للعودة، يتم تحديده ديناميكيًا في الواجهة (view) -->
+    <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">إلغاء</a>
+</form>
+{% endblock %}

@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}الرئيسية - نظام قطع غيار السيارات{% endblock %}
+
+{% block content %}
+
+<!-- قسم السلايدر المحسن -->
+<section class="slider-section mb-5">
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <!-- مؤشرات السلايدر -->
+        <div class="carousel-indicators">
+            {% for slider in sliders %}
+            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                    class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" 
+                    aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+        
+        <div class="carousel-inner">
+            {% for slider in sliders %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="5000">
+                <img src="{{ slider.image.url }}" class="d-block w-100" alt="{{ slider.caption|default:'سلايدر' }}" 
+                     style="height: 600px; object-fit: cover; filter: brightness(0.7);" />
+                <div class="carousel-caption d-none d-md-block">
+                    <div class="slider-content">
+<h2 style="color: white;">{{ slider.caption }}</h2>
+                        {% if slider.description %}
+                        <p class="white animate__animated animate__fadeInUp animate__delay-1s">{{ slider.description }}</p>
+                        {% endif %}
+                        {% if slider.button_text and slider.button_url %}
+                        <div class="slider-buttons mt-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            <a href="{{ slider.button_url }}" class="btn btn-primary btn-lg me-2">{{ slider.button_text }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- رسالة في حالة عدم وجود صور في السلايدر -->
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center align-items-center bg-secondary" style="height: 600px;">
+                    <div class="text-center text-white">
+                        <h3>مرحباً بكم في نظام قطع غيار السيارات</h3>
+                        <p class="mt-3">لا توجد صور لعرضها حالياً</p>
+                        <a href="{% url 'main:car_list' %}" class="btn btn-primary btn-lg mt-3">تصفح قطع الغيار</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- أزرار التحكم بالسلايدر -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">السابق</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">التالي</span>
+        </button>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-page" id="services">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2 class="mb-3">خدماتنا</h2>
+            <p class="text-muted">نقدم لكم أفضل خدمات قطع غيار السيارات بجودة عالية وأسعار منافسة</p>
+        </div>
+        
+        <div class="row">
+            {% for service in services %}
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ forloop.counter|add:'0' }}00ms">
+                <div class="services-one__single h-100">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{{ service.image.url }}" alt="{{ service.title }}" 
+                                 style="height: 250px; object-fit: cover; width: 100%;" />
+                        </div>
+                    
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">{{ service.title }}</a>
+                            </h3>
+                            <p class="services-one__text">
+                                {{ service.description|truncatewords:20 }}
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- خدمات افتراضية إذا لم توجد خدمات -->
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                <div class="services-one__single h-100">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-1.jpg' %}" 
+                                 alt="قطع غيار أصلية" style="height: 250px; object-fit: cover; width: 100%;" />
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-cruise"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">قطع غيار أصلية</a>
+                            </h3>
+                            <p class="services-one__text">
+                                نوفر أفضل قطع الغيار الأصلية بجودة عالية وضمان مميز من موردين معتمدين
+                            </p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                <div class="services-one__single h-100">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-2.jpg' %}" 
+                                 alt="خدمة التوصيل" style="height: 250px; object-fit: cover; width: 100%;" />
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-delivery-truck"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">توصيل سريع</a>
+                            </h3>
+                            <p class="services-one__text">
+                                خدمة توصيل سريعة لجميع أنحاء المملكة العربية السعودية خلال 24-48 ساعة
+                            </p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+                <div class="services-one__single h-100">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-3.jpg' %}" 
+                                 alt="دعم فني" style="height: 250px; object-fit: cover; width: 100%;" />
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-customer-service"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">دعم فني</a>
+                            </h3>
+                            <p class="services-one__text">
+                                فريق دعم فني متاح على مدار الساعة لمساعدتك في جميع استفساراتك الفنية
+                            </p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- قسم معلومات سريعة -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // تهيئة السلايدر مع تحسينات إضافية
+    document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = document.getElementById('mainCarousel');
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 5000, // 5 ثواني بين كل شريحة
+            wrap: true,     // يعود للبداية بعد الانتهاء
+            pause: 'hover'  // يتوقف عند التحويم
+        });
+        
+        // إضافة تأثيرات عند تغيير الشرائح
+        myCarousel.addEventListener('slide.bs.carousel', function (e) {
+            var nextSlide = e.relatedTarget;
+            var captions = nextSlide.querySelectorAll('.animate__animated');
+            captions.forEach(function(caption) {
+                caption.style.opacity = '0';
+            });
+        });
+        
+        myCarousel.addEventListener('slid.bs.carousel', function (e) {
+            var activeSlide = e.relatedTarget;
+            var captions = activeSlide.querySelectorAll('.animate__animated');
+            captions.forEach(function(caption, index) {
+                setTimeout(function() {
+                    caption.style.opacity = '1';
+                }, index * 300);
+            });
+        });
+    });
+</script>
+
+<style>
+    .slider-section {
+        position: relative;
+    }
+    
+    .slider-content {
+        position: absolute;
+        bottom: 20%;
+        right: 10%;
+        text-align: right;
+        max-width: 600px;
+    }
+    
+    .slider-content h2.white {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    
+    .slider-content p.white {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .slider-buttons .btn {
+        border-radius: 25px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .slider-buttons .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .carousel-indicators button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 0 5px;
+    }
+    
+    .stats-section .stat-item h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    
+    /* تحسينات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .slider-content {
+            right: 5%;
+            left: 5%;
+            text-align: center;
+        }
+        
+        .slider-content h2.white {
+            font-size: 2rem;
+        }
+        
+        .slider-content p.white {
+            font-size: 1rem;
+        }
+        
+        .carousel-item img {
+            height: 400px !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .carousel-item img {
+            height: 300px !important;
+        }
+        
+        .slider-content h2.white {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}

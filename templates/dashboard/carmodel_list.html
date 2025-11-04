@@ -1,0 +1,34 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}إدارة الموديلات{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>إدارة الموديلات</h1>
+    <a href="{% url 'dashboard:carmodel_create' %}" class="btn btn-primary">إضافة موديل جديد</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>اسم الموديل</th>
+                <th>الشركة</th>
+                <th>إجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for model in carmodels %}
+            <tr>
+                <td>{{ model.name }}</td>
+                <td>{{ model.company.name }}</td>
+                <td>
+                    <a href="{% url 'dashboard:carmodel_update' model.pk %}" class="btn btn-sm btn-warning">تعديل</a>
+                    <a href="{% url 'dashboard:carmodel_delete' model.pk %}" class="btn btn-sm btn-danger">حذف</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

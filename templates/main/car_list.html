@@ -1,0 +1,95 @@
+<!-- قالب قائمة السيارات -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}قائمة السيارات{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">قائمة قطع غيار السيارات</h1>
+
+<!-- نموذج البحث والفلترة -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                {{ search_form.query|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.company|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.model|as_crispy_field }}
+            </div>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary w-100">بحث</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- جدول عرض السيارات -->
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>الشركة</th>
+                <th>الموديل</th>
+                <th>الصانع</th>
+                <th>السنة</th>
+                <th>رقم القطعة</th>
+                <th>Crash In</th>
+                <th>إجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+            <tr>
+                <td>{{ car.company.name }}</td>
+                <td>{{ car.model.name }}</td>
+                <td>{{ car.manufacturer }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.part_number }}</td>
+                <td>{{ car.crash_in }}</td>
+                <td>
+                    <!-- زر لعرض التفاصيل -->
+                    <a href="{% url 'main:car_detail' car.pk %}" class="btn btn-info btn-sm">عرض</a>
+                </td>
+            </tr>
+            {% empty %}
+            <!-- رسالة في حالة عدم وجود نتائج -->
+            <tr>
+                <td colspan="7" class="text-center">لا توجد سيارات تطابق معايير البحث.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ترقيم الصفحات (Pagination) -->
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">السابق</span></li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active" aria-current="page"><span class="page-link">{{ i }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">التالي</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

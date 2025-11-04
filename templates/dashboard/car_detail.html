@@ -1,0 +1,30 @@
+<!-- قالب تفاصيل السيارة -->
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}تفاصيل القطعة - {{ car.part_number }}{% endblock %}
+
+{% block dashboard_content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">تفاصيل القطعة: {{ car.part_number }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>الشركة:</strong> {{ car.company.name }}</p>
+                <p><strong>الموديل:</strong> {{ car.model.name }}</p>
+                <p><strong>الصانع:</strong> {{ car.manufacturer }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>السنة:</strong> {{ car.year }}</p>
+                <p><strong>رقم القطعة:</strong> {{ car.part_number }}</p>
+                <p><strong>Crash In:</strong> {{ car.crash_in }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <!-- زر للعودة إلى قائمة السيارات -->
+        <a href="{% url 'dashboard:car_list' %}" class="btn btn-secondary">العودة إلى القائمة</a>
+    </div>
+</div>
+{% endblock %}

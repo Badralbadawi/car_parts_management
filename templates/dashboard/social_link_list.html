@@ -1,0 +1,38 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}إدارة روابط التواصل الاجتماعي{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>إدارة روابط التواصل الاجتماعي</h1>
+    <a href="{% url 'dashboard:social_link_create' %}" class="btn btn-primary">إضافة رابط جديد</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>الاسم</th>
+                <th>الرابط</th>
+                <th>الأيقونة</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for link in social_links %}
+            <tr>
+                <td>{{ link.name }}</td>
+                <td>{{ link.url }}</td>
+                <td><i class="{{ link.icon_class }}"></i> ({{ link.icon_class }})</td>
+                <td>{% if link.is_visible %}مرئي{% else %}مخفي{% endif %}</td>
+                <td>
+                    <a href="{% url 'dashboard:social_link_update' link.pk %}" class="btn btn-sm btn-warning">تعديل</a>
+                    <a href="{% url 'dashboard:social_link_delete' link.pk %}" class="btn btn-sm btn-danger">حذف</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

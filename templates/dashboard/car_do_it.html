@@ -1,0 +1,32 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %}
+
+<div class="card p-4 shadow">
+    <h3 class="mb-3">تفاصيل القطعة</h3>
+
+    <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>الشركة:</strong> {{ car.company.name }}</li>
+        <li class="list-group-item"><strong>الموديل:</strong> {{ car.model.name }}</li>
+        <li class="list-group-item"><strong>الصانع:</strong> {{ car.manufacturer }}</li>
+        <li class="list-group-item"><strong>السنة:</strong> {{ car.year }}</li>
+        <li class="list-group-item"><strong>رقم القطعة:</strong> {{ car.part_number }}</li>
+        <li class="list-group-item"><strong>Crash In:</strong> {{ car.crash_in }}</li>
+        <li class="list-group-item"><strong>ID Chep:</strong> {{ car.id_chep }}</li>
+    </ul>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-success" onclick="alert('Read Value: {{ car.read|default:'لا توجد بيانات' }}')">
+            Read
+        </button>
+
+        <button class="btn btn-warning" onclick="alert('Write Value: {{ car.write|default:'لا توجد بيانات' }}')">
+            Write
+        </button>
+
+        <button class="btn btn-danger" onclick="alert('تم مسح الكاش بنجاح ✅')">
+            Clear Cache
+        </button>
+    </div>
+</div>
+
+{% endblock %}

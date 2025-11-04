@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}الرئيسية - نظام قطع غيار السيارات{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="page-header">
+    <div class="page-header__bg" style="background-image: url({% static 'bondor/images/backgrounds/page-header-bg.jpg' %});"></div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h2>مرحباً بكم في نظام قطع الغيار</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="{% url 'main:home' %}">الرئيسية</a></li>
+                    <li><span>-</span></li>
+                    <li>الخدمات</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-page" id="services">
+    <div class="container">
+        <div class="row">
+            <!-- Services will be dynamically loaded here -->
+            {% for service in services %}
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                <div class="services-one__single">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-cruise"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">{{ service.title }}</a>
+                            </h3>
+                            <p class="services-one__text">{{ service.description|truncatewords:20 }}</p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default services if no services exist -->
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                <div class="services-one__single">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-1.jpg' %}" alt="قطع غيار أصلية">
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-cruise"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">قطع غيار أصلية</a>
+                            </h3>
+                            <p class="services-one__text">نوفر أفضل قطع الغيار الأصلية بجودة عالية وضمان مميز</p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                <div class="services-one__single">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-1.jpg' %}" alt="خدمة التوصيل">
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-delivery-truck"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">توصيل سريع</a>
+                            </h3>
+                            <p class="services-one__text">خدمة توصيل سريعة لجميع أنحاء المملكة العربية السعودية</p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+                <div class="services-one__single">
+                    <div class="services-one__img-box">
+                        <div class="services-one__img">
+                            <img src="{% static 'bondor/images/services/services-1-1.jpg' %}" alt="دعم فني">
+                        </div>
+                        <div class="services-one__icon-box">
+                            <div class="services-one__icon">
+                                <span class="icon-customer-service"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="services-one__content">
+                        <div class="services-one__title-box">
+                            <h3 class="services-one__title">
+                                <a href="#">دعم فني</a>
+                            </h3>
+                            <p class="services-one__text">فريق دعم فني متاح على مدار الساعة لمساعدتك في جميع استفساراتك</p>
+                        </div>
+                        <div class="services-one__read-more">
+                            <a href="#">اقرأ المزيد <span class="icon-right-arrow"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section" id="about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-section__content">
+                    <h2>من نحن</h2>
+                    <p>
+                        نحن شركة رائدة في مجال توفير قطع غيار السيارات الأصلية والموثوقة. 
+                        نقدم حلولاً متكاملة لجميع احتياجات قطع الغيار مع ضمان الجودة والكفاءة.
+                    </p>
+                    <ul class="about-section__list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>قطع غيار أصلية وموثوقة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>أسعار تنافسية وعروض مميزة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>خدمة عملاء على مدار الساعة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>توصيل سريع لجميع أنحاء المملكة</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-section__image">
+                    <img src="{% static 'bondor/images/services/services-1-1.jpg' %}" alt="من نحن">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="contact-section__form">
+                    <h2>اتصل بنا</h2>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" placeholder="اسمك الكامل" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" placeholder="بريدك الإلكتروني" required>
+                            </div>
+                            <div class="col-12">
+                                <textarea placeholder="رسالتك" rows="5" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="thm-btn">إرسال الرسالة</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

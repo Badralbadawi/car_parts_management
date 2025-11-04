@@ -1,0 +1,16 @@
+# هذا الملف يسرد جميع المكتبات التي يعتمد عليها المشروع
+# Django: إطار العمل الأساسي للمشروع
+Django>=4.0
+
+# pyodbc: المحرك اللازم للاتصال بقاعدة بيانات SQL Server
+pyodbc
+
+# django-mssql-backend: مكتبة الواجهة الخلفية لـ Django للعمل مع SQL Server
+django-mssql-backend
+
+# django-crispy-forms: لتحسين عرض النماذج في القوالب باستخدام Bootstrap
+django-crispy-forms
+crispy-bootstrap5
+
+# Pillow: مكتبة لمعالجة الصور، مطلوبة لحقول ImageField في Django
+Pillow

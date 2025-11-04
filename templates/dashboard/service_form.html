@@ -1,0 +1,15 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if object %}تعديل الخدمة{% else %}إضافة خدمة جديدة{% endif %}{% endblock %}
+
+{% block dashboard_content %}
+<h1>{% if object %}تعديل الخدمة{% else %}إضافة خدمة جديدة{% endif %}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">حفظ</button>
+    <a href="{% url 'dashboard:service_list' %}" class="btn btn-secondary">إلغاء</a>
+</form>
+{% endblock %}

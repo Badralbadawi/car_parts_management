@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}نظام إدارة قطع غيار السيارات{% endblock %}</title>
+    
+    {% load static %}
+    
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'bondor/images/favicons/apple-touch-icon.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'bondor/images/favicons/favicon-32x32.png' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'bondor/images/favicons/favicon-16x16.png' %}" />
+    <link rel="manifest" href="{% static 'bondor/images/favicons/site.webmanifest' %}" />
+    <meta name="description" content="نظام إدارة قطع غيار السيارات" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'bondor/vendors/bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/animate/animate.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/animate/custom-animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/fontawesome/css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/jarallax/jarallax.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/jquery-magnific-popup/jquery.magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/odometer/odometer.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/swiper/swiper.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/owl-carousel/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/vendors/owl-carousel/owl.theme.default.min.css' %}" />
+    
+    <!-- template styles -->
+    <link rel="stylesheet" href="{% static 'bondor/css/bondor.css' %}" />
+    <link rel="stylesheet" href="{% static 'bondor/css/bondor-responsive.css' %}" />
+    
+    <style>
+        /* تخصيصات إضافية للغة العربية */
+        body {
+            font-family: 'DM Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-menu-two__top-icon-content p,
+        .main-menu-two__top-icon-content h6,
+        .services-one__title,
+        .services-one__text,
+        .cta-one__title-box h3,
+        .cta-one__title-box p,
+        .footer-widget__about-text,
+        .footer-widget__title,
+        .footer-widget__navigation-list a,
+        .footer-widget__newsletter-text {
+            font-family: 'DM Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image"></div>
+    </div>
+    <!-- /.preloader -->
+
+    <div class="page-wrapper">
+        <!-- Header Section -->
+        <header class="main-header-two">
+            <div class="main-menu-two__top">
+                <div class="container">
+                    <div class="main-menu-two__top-inner">
+                        <div class="main-menu-two__logo">
+                            <a href="{% url 'main:home' %}">
+                                <img src="{% static 'bondor/images/resources/logo-2.png' %}" alt="شعار النظام">
+                                <span style="color: #333; font-weight: bold; margin-right: 10px;">قطع غيار السيارات</span>
+                            </a>
+                        </div>
+                        <div class="main-menu-two__top-right">
+                            <div class="main-menu-two__top-icon-box">
+                                <div class="main-menu-two__top-icon">
+                                    <span class="icon-payment"></span>
+                                </div>
+                                <div class="main-menu-two__top-icon-content">
+                                    <p>أفضل قطع الغيار</p>
+                                    <h6>أكثر من 5.6k عميل</h6>
+                                </div>
+                            </div>
+                      <div class="main-menu-two__social">
+    {% for link in social_links %}
+        <a href="{{ link.url }}" target="_blank" class="text-white me-2">
+            <i class="{{ link.icon_class }}"></i>
+        </a>
+    {% empty %}
+        <!-- روابط افتراضية في حالة عدم وجود بيانات -->
+        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+    {% endfor %}
+</div>
+                            <div class="main-menu-two__btn-box">
+                                {% if user.is_authenticated %}
+                                    <div class="dropdown">
+                                        <button class="thm-btn main-menu-two__btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-user me-2"></i>{{ user.username }}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><span class="dropdown-item-text">مرحباً، {{ user.full_name }}</span></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            {% if user.permission_type == 'admin' %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'dashboard:home' %}">
+                                                        <i class="fas fa-tachometer-alt me-2"></i>لوحة التحكم
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            <li>
+                                                <a class="dropdown-item text-danger" href="{% url 'main:logout' %}">
+                                                    <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% else %}
+                                    <a href="{% url 'main:login' %}" class="thm-btn main-menu-two__btn">تسجيل الدخول</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="main-menu main-menu-two">
+                <div class="main-menu-two__wrapper">
+                    <div class="container">
+                        <div class="main-menu-two__wrapper-inner">
+                            <div class="main-menu-two__left">
+                                <div class="main-menu-two__main-menu-box">
+                                    <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+                                    <ul class="main-menu__list">
+                                        <li>
+                                            <a href="{% url 'main:home' %}">الرئيسية</a>
+                                        </li>
+                                        <li>
+                                            <a href="#services">الخدمات</a>
+                                        </li>
+                                        <li>
+                                            <a href="#about">من نحن</a>
+                                        </li>
+                                        <li>
+                                            <a href="#contact">اتصل بنا</a>
+                                        </li>
+                                        {% if user.is_authenticated and user.permission_type == 'admin' %}
+                                        <li>
+                                            <a href="{% url 'dashboard:home' %}">لوحة التحكم</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="main-menu-two__right">
+                                <div class="main-menu-two__cart-search-box">
+                                    <div class="main-menu__search-box">
+                                        <form action="#" class="main-menu__search-form">
+                                            <input type="search" placeholder="ابحث هنا...">
+                                            <button type="submit"><i class="icon-search"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Sticky Header -->
+        <div class="stricky-header stricked-menu main-menu main-menu-two">
+            <div class="sticky-header__content"></div>
+        </div>
+
+        <!-- Main Content Block -->
+        <main>
+            {% block content %}
+            <!-- محتوى الصفحات الفرعية سيأتي هنا -->
+            {% endblock %}
+        </main>
+
+        <!-- CTA Section -->
+        <section class="cta-one">
+            <div class="container">
+                <div class="cta-one__inner">
+                    <div class="cta-one__bg" style="background-image: url({% static 'bondor/images/backgrounds/cta-one-bg.jpg' %});"></div>
+                    <div class="cta-one__title-box">
+                        <h3>تبحث عن أفضل قطع الغيار؟</h3>
+                        <p>جرب نظامنا بدون مخاطر - لا توجد رسوم إلغاء</p>
+                    </div>
+                    <div class="cta-one__btn-box">
+                        <a href="#contact" class="cta-one__btn thm-btn">اطلب عرض سعر</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="site-footer">
+            <div class="site-footer__shape-1 float-bob-x">
+                <img src="{% static 'bondor/images/shapes/footer-shape-1.png' %}" alt="">
+            </div>
+            <div class="site-footer__shape-2 float-bob-y">
+                <img src="{% static 'bondor/images/shapes/footer-shape-2.png' %}" alt="">
+            </div>
+            <div class="site-footer__top">
+                <div class="container">
+                    <div class="site-footer__top-inner">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
+                                <div class="footer-widget__column footer-widget__about">
+                                    <div class="footer-widget__logo">
+                                        <a href="{% url 'main:home' %}">
+                                            <img src="{% static 'bondor/images/resources/footer-logo-1.png' %}" alt="">
+                                            <span style="color: white; font-weight: bold;">قطع غيار السيارات</span>
+                                        </a>
+                                    </div>
+                                    <p class="footer-widget__about-text">
+                                        العنوان: 301 شارع الأمراء، المعاملة الضريبية الدمياط مصر-104
+                                    </p>
+                                    <div class="footer-widget__emergency-call">
+                                        <a href="tel:+966123456789">+966 123 456 789</a>
+                                        <a href="mailto:info@carsystem.com" class="footer-widget__emergency-mail">info@carsystem.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                                <div class="footer-widget__column footer-widget__navigation">
+                                    <div class="footer-widget__title-box">
+                                        <h3 class="footer-widget__title">روابط سريعة</h3>
+                                    </div>
+                                    <ul class="footer-widget__navigation-list list-unstyled">
+                                        <li><a href="{% url 'main:home' %}">الرئيسية</a></li>
+                                        <li><a href="#about">من نحن</a></li>
+                                        <li><a href="#services">الخدمات</a></li>
+                                        <li><a href="#contact">اتصل بنا</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
+                                <div class="footer-widget__column footer-widget__newsletter">
+                                    <div class="footer-widget__title-box">
+                                        <h3 class="footer-widget__title">النشرة الإخبارية</h3>
+                                    </div>
+                                    <p class="footer-widget__newsletter-text">
+                                        اشترك في نشرتنا الإخبارية لتحصل على <br> آخر الأخبار والتحديثات
+                                    </p>
+                                    <form class="footer-widget__newsletter-form">
+                                        <div class="footer-widget__newsletter-input-box">
+                                            <input type="email" placeholder="email@example.com" name="email">
+                                            <button type="submit" class="footer-widget__newsletter-btn">
+                                                <i class="icon-paper-plane"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-footer__bottom">
+                <div class="container">
+                    <div class="site-footer__bottom-inner">
+                        <p class="site-footer__bottom-text">
+                            جميع الحقوق محفوظة &copy; 2024 نظام إدارة قطع غيار السيارات
+                        </p>
+                        <div class="site-footer__social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+
+            <div class="logo-box">
+                <a href="{% url 'main:home' %}" aria-label="logo image">
+                    <img src="{% static 'bondor/images/resources/logo-1.png' %}" width="150" alt="" />
+                </a>
+            </div>
+            
+            <div class="mobile-nav__container"></div>
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:info@carsystem.com">info@carsystem.com</a>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+966123456789">+966 123 456 789</a>
+                </li>
+            </ul>
+            
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__social">
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-facebook-square"></a>
+                    <a href="#" class="fab fa-pinterest-p"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Popup -->
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form action="#">
+                <label for="search" class="sr-only">ابحث هنا</label>
+                <input type="text" id="search" placeholder="ابحث هنا..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scroll to Top -->
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript Files -->
+    <script src="{% static 'bondor/vendors/jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/jarallax/jarallax.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/jquery-appear/jquery.appear.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/jquery-validate/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/odometer/odometer.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/swiper/swiper.min.js' %}"></script>
+    <script src="{% static 'bondor/vendors/wow/wow.js' %}"></script>
+    <script src="{% static 'bondor/vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+    
+    <!-- template js -->
+    <script src="{% static 'bondor/js/bondor.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
